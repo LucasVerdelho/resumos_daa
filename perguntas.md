@@ -1,6 +1,6 @@
-# Teoricas
+# Teste 2021/2022
 
-### **1. - No desenvolvimento de sistemas de aprendizagem automática (machine learning) podem ser utilizados diferentes paradigmas de aprendizagem. Neste contexto pretende-se que:**
+## **1. - No desenvolvimento de sistemas de aprendizagem automática (machine learning) podem ser utilizados diferentes paradigmas de aprendizagem. Neste contexto pretende-se que:**
 #### **A. - Caraterize os paradigmas de aprendizagem supervisionada, nao supervisionada e por reforço**
 #### **B. - Apresente dois exemplos de técnicas de cada paradigma, ilustrando-os com casos de aplicação**
 
@@ -75,7 +75,7 @@
 
 
 
-### **2. - O processo de desenvolvimento de uma solução de aprendizagem automática envolve diversas etapas, que podem diferir de acordo com a metodologia escolhida. Neste contexto pretende-se que:**
+## **2. - O processo de desenvolvimento de uma solução de aprendizagem automática envolve diversas etapas, que podem diferir de acordo com a metodologia escolhida. Neste contexto pretende-se que:**
 #### **A. - Tendo em conta a metodologia CRISP-DM, pretende-se que enumere e descreva as suas etapas**
 
 
@@ -117,3 +117,184 @@
 5. **Assess:**
     - **Descrição:** Avaliar o desempenho dos modelos usando métricas e critérios relevantes.
 
+
+## **3. Responder Responda às questões deste grupo no espaço reservado PREENCHENDO OS ESPAÇOS VAZIOS com as expressões devidas de modo que a afirmação seja correta**
+
+1. No contexto da utilização de técnicas de machine learning, a adoção de uma metodologia para a extração de conhecimento descreve e cria **`um conjunto de etapas ou fases`** pelos quais deverá passar o desenvolvimento de um projeto de extração de conhecimento para **`obter informações úteis e relevantes a partir dos dados`**.
+
+2. A metodologia de extração de conhecimento que se desenvolve em 5 etapas, denominada de SEMMA, é composta pelas etapas de **`Sample`**, **`Explore`**, **`Modify`**, **`Model`** e **`Assess`**.
+
+3. Support Vector Machine é uma técnica **`supervisionada`** de machine learning que pode ser utilizada para resolver problemas de **`classificação`** e de **`regressão`**.
+
+4. Num diagrama de caixa / boxplot, como no exemplo abaixo, o ponto **C** corresponde à **`mediana`**, a caixa **G** representa **`IQR, ou range interquartil`** dos dados do estudo, e os círculos **F** identificam os valores **`outliers`**. do dataset. O ponto **A** representa o valor **`mínimo (Q1 - 1.5*IQR)`** e o ponto **E** o valor **`máximo (Q3 + 1.5*IQR)`**. O ponto **B** representa o valor **`Q1 (25th percentile)`** e o ponto **D** o valor **`Q3 (75th percentile)`**.
+
+![boxplot](images/exercicio3.4.png)
+
+
+## **4. Considere o dataset Titanic, utilizado várias vezes ao longo do semestre. Considere também o excerto de código apresentado na figura abaixo, onde é apresentada a construção e avaliação de um modelo de aprendizagem automatica. Responda às questões que se seguem.**
+
+```python
+
+df = pd.read_csv('titanic_dataset.csv')
+
+X = df.drop(['Survived', 'Age', 'PassengerId', 'Name', 'Ticket', 'Cabin', 'Embarked', 'Sex'], axis=1)
+y = df['Survived']
+
+sex_ohe = pd.merge(df['Sex'], drop_first=True)
+embarked_ohe = pd.merge(df['Embarked'], drop_first=True)
+
+X = pd.concat([X, sex_ohe, embarked_ohe], axis=1)
+X_train, X_test, y_train, y_test =
+train_test_split(y, X, test_size=0.3)
+
+model = Sequential()
+model.add(Dense(16, input_dim=y.shape[1],
+activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(loss = 'binary_crossentropy', optimizer = 'adam',
+metrics = ['mse'])
+model.transform(X_train, y_train, epochs=50,
+batch_size=32)
+loss, acc = model.evaluate(X_train, y_train)
+
+```
+### **4.1 - O Excerto de código representado acima apresenta imprecisões, corrija-as.**
+
+```python
+# Load the dataset
+df = pd.read_csv('titanic_dataset.csv')
+
+# Drop unnecessary columns
+X = df.drop(['Survived', 'Age', 'PassengerId', 'Name', 'Ticket', 'Cabin', 'Embarked', 'Sex'], axis=1)
+y = df['Survived']
+
+# Perform one-hot encoding for 'Sex' and 'Embarked'
+sex_ohe = pd.get_dummies(df['Sex'], drop_first=True)
+embarked_ohe = pd.get_dummies(df['Embarked'], drop_first=True)
+
+# Concatenate one-hot encoded columns to the features
+X = pd.concat([X, sex_ohe, embarked_ohe], axis=1)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Build the neural network model
+model = Sequential()
+model.add(Dense(16, input_dim=X.shape[1], activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# Train the model
+model.fit(X_train, y_train, epochs=50, batch_size=32, verbose=1)
+
+# Evaluate the model on the training set
+loss, acc = model.evaluate(X_train, y_train)
+print(f"Training Loss: {loss}, Training Accuracy: {acc}")
+```
+
+1. O `pd.merge()` não é usado para fazer one-hot encoding, mas sim o `pd.get_dummies()`
+
+2. Quando a função train_test_split é usada os argumentos deveriam ser X e y e não y e X
+
+3. O parametro `input_dim` do modelo Sequential na primeira camada deveria ser o número de features (colunas) e não o número de linhas do dataset 
+
+4. o metodo `model.transform` não é válido, o método correto é `model.fit`
+
+5. As labels `Survived` são binárias (0 ou 1), mas o modelo está a usar uma função de ativação `sigmoid` na última camada, o que é adequado para classificação binária. No entanto, está a tratar-se como um problema de regressão ao usar `mse` (mean squared error) como função de perda. Deveria usar `binary_crossentropy` como função de perda
+
+
+### **4.2 Identifique a técnica de aprendizagem utilizada neste excerto de código e indique quatro hiperparâmetros passiveis de serem modificados para afinar o modelo** 
+
+O excerto de código apresenta uma rede neural utilizando a biblioteca Keras (parte do TensorFlow). A técnica de aprendizagem é Deep Learning, especificamente uma Rede Neural Artificial. A rede neural é construída usando o modelo sequencial (Sequential), com camadas densas (Dense) e a função de ativação ReLU nas camadas ocultas e uma função de ativação sigmoid na camada de saída.
+
+Quatro hiperparâmetros que podem ser modificados para afinar o modelo são:
+- **units:** Este é o número de neurónios em cada camada. Aumentar ou diminuir o número de unidades pode afetar a capacidade do modelo
+- **learning_rate:** A taxa de aprendizagem controla o tamanho dos passos que o otimizador dá durante a atualização dos pesos. Ajustar a taxa de aprendizagem pode afetar a rapidez com que o modelo converge para uma solução
+- **epochs:** O número de épocas determina quantas vezes o modelo verá todo o conjunto de dados durante o treino. Aumentar o número de épocas pode melhorar o desempenho do modelo, mas também pode levar a overfitting e vice versa pode levar a underfitting
+- **batch_size:** O tamanho do lote define quantos exemplos de treino sã o usados numa iteração. Modificar este valor pode afetar a velocidade de treino e estabilidade do modelo
+
+```python
+# Example on How to use Hyperparameter Tuning
+model = Sequential()
+model.add(Dense(32, input_dim=X.shape[1], activation='relu'))  # Modify units
+model.add(Dense(16, activation='relu'))  # Modify units
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model with a different learning rate
+model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.001), metrics=['accuracy'])
+
+# Train the model with a different number of epochs and batch size
+model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
+```
+
+
+### **4.3 - Admita que o dataset Titanic não está balanceado. Descreva de que forma este desbalanceamento influencia o modelo**
+
+Quando um dataset não está balanceado, a distribuição de classes (neste caso, se um passageiro sobreviveu ou não) será significativamente skewed (enviesada) para uma classe. No contexto do dataset do titanic, se a maior parte dos passageiros não sobreviveu o dataset será considerado desbalanceado. O impacto de um dataset desbalanceado num modelo de Machine Learning poderá ser substancial:
+- **Bias do Modelo:** Datasets desbalanceados podem levar a modelos enviesados, uma vez que o algorítmo poderá favorecer a classe maioritária. O modelo poderá ter um mau desempenho a prever instâncias da classe minoritária
+- **Accuracy Misleading:** A accuracy poderá não ser uma métrica apropriada para avaliar o performance do modelo num dataset desbalanceado. Um modelo a prever a classe maioritária para todas as instâncias poderá ter uma accuracy muito elevada mas falha em detetar padrões importantes na classe minoritária
+- **Limited Generalization:** Datasets desbalanceados podem levar a modelos que generalizam mal para novos dados, em especial para a classe minoritária. O modelo poderá não capturar os padrões subjacentes necessários para fazer previsões precisas em cenários reais
+
+Para lidar com datasets desbalanceados, várias técnicas podem ser aplicadas tais como resampling (oversampling da classe minoritária ou undersampling da classe maioritária), usar diferentes métricas de avaliação (precisão, recall, f1-score, etc) ou usar algorítmos que lidam melhor com datasets desbalanceados.
+
+
+
+## **5. Comente as afirmações seguintes, assinalando a sua veracidade (V) ou falsidade (F), justificando sempre a sua resposta.**
+### **1 - No desenvolvimento de sistemas de aprendizagem automática, a fase de preparação de dados tem particular importância porque os dados obtidos do «mundo físico» são incompletos, contêm lixo e são falsos.**
+
+True
+
+Num desenvolviment o de um sistema de machine learning, preparação dos dados é crucial visto que dados obtidos do mundo real são muitas vezes incompletos, contêm ruído e podem conter informação falsa (CNN,MSNBC,SIC noticias etc.). Para construir um modelo robusto e preciso é essencial tratar destes problemas durante a fase de preparação de dados.
+
+
+
+### **2 - Técnicas de aprendizagem automática baseadas no desenvolvimento de árvores de decisão são utilizadas exclusivamente para a resolução de problemas de classificação.**
+
+False
+
+Técnicas de machine learning baseadas em árvores de decisão, como Random Forests, podem ser aplicadas a ambos os problemas de classificação e regressão. Enquanto que as árvores de decisão são geralmente usadas para problemas de classificação, também podem ser adaptadas para problemas de regressão, tornando-as versáteis e úteis em vários cenários.
+
+
+### **3 - Paradigmas de aprendizagem com supervisão exigem maior intervenção humana do que qualquer outro paradigma uma vez que necessitam de quem desempenhe o papel de supervisor.**
+
+False
+
+Paradigmas de aprendizagem supervisionados envolvem dados rotulados por humanos, contudo não necessitam necessáriamente de mais intervenção humanda do que outros paradigmas. Por exemplo, algoritmos de aprendizagem nao supervisionada envolvem mais decisões humanas a definir a tarefa e interpretar os resultados. O nível de intervenção humana depende do problema e do paradigma de aprendizagem usado.	
+
+
+### **4 - O tratamento de valores nulos (missing values) existentes num dataset pode envolver a remoção de observações/registos ou de atributos/características.**
+
+True
+
+Lidar com missing values num dataset pode envolver remover records ou atributos. Dependendo na quantidade e natureza dos valores em falta, outras técnicas podem ser usadas como imputação (substituir os valores em falta por estimativas). A escolha de estratégia depende no impacto dos valores em falta na análise e nas características do dataset.
+
+
+### **5 - A matriz de confusão em baixo apresenta um valor de accuracy de 165/150.**
+
+![matriz_confusao](images/confusionmatrix1.png)
+
+False
+
+Accuracy = True Positives + True Negatives / Total
+
+True positives = 100
+True Negatives = 50
+Total = 165
+
+Accuracy = 150/165 = 0.909 = 90.9%
+
+
+### **6 - Num processo de aprendizagem automática, a qualidade dos dados não afeta os resultados do processo uma vez que na fase de preparação de dados serão resolvidos todos os problemas como, por exemplo, ruído, outliers, dados falsos ou dados duplicados.**
+
+
+False
+
+A qualidade dos dados afeta significativamente os resultados de um processo de machine learning. Problemas como ruído, outliers, false data e valores duplicadoes podem introduzir biases e erros no modelo. Enquanto que alguns problemas podem ser resolvidos durante a fase de preparação de dados, a qualidade global dos dados é um fator crítico em determinar o sucesso de um modelo.
+
+
+
+# Teste 2022/2023
