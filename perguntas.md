@@ -312,5 +312,51 @@ A qualidade dos dados afeta significativamente os resultados de um processo de m
 
 ### **2.1 - Quais poderão ser os motivos para esta convergir lentamente ou não convergir**
 
+Convergência lenta ou não convergência pode ser causada por vários fatores:
+- **Learning Rate:** Se a learning rate for demasiado pequena, o algorítmo poderá converger muito lentamente, requirindo mais iterações para alcançar os parâmetros ótimos
+- **Complexidade do Modelo:** Modelos muito complexos poderão converger lentamente em particular se o landscape para otimização tiver muitas regiões planas
+
+Não Convergência:
+- **Learning Rate:** Se a learning rate for demasiado grande, o algorítmo poderá divergir e não convergir para os parâmetros ótimos ou poderá oscilar em torno dos parâmetros ótimos.
+- **Inicialização dos Parâmetros:** Se os valores iniciais forem mal escolhidos o algorítmo poderá não convergir para os parâmetros ótimos
+- **Landscape de Otimização:** Se o landscape de otimização tiver muitos mínimos locais ou saddle points, o algorítmo poderá convergir para um mínimo local em vez do mínimo global
+
+
 ### **2.2 - Indique 2 exemplos de algoritmos de Machine Learning que façam uso desta técnica**
 
+Linear Regression:
+- Em regressão linear, a descida por gradiente é frequentemente usada para otimizar os coeficientes (parametros) que minimizam o MSE (mean squared error) entre os valores reais e os valores previstos
+
+Logistic Regression:
+- Em regressão logística, usada para classificação binária, a descida por gradiente é usada para minimizar a função de custo ou perda. O objetivo é encontrar os pesos otimos que minimizam a cross-entropy loss function.
+
+
+## **3. - Verdadeiro ou Falso? Justifique sempre a sua resposta.**
+
+### **3.1 - O algoritmo de aprendizagem Decision Tree apresenta normalmente um melhor dsempenho quando comparado com o algoritmo de aprendizagem Random Forest, apresentando carateristicas que possibilitem mitigar o problema de overfit de dados**
+
+False
+
+Decision Trees e Random Forests servem propósitos diferentes. Decision trees tendem a overfit visto que poderão criar árvores muito complexas que se ajustam demasiado aos dados de treino. Random Forests por outro lado são conjuntos de árvores que conseguem mitigar overfitting ao agregar previsões de várias árvores. De facto, Random Forests frequentemente apresentam melhor desempenho que Decision Trees.
+
+
+### **3.2 - A Off-Policy Learning verificada nos algoritmos de Reinforcement Learning considera a avaliação e a optimização da respetiva policy aplicada para a seleção das ações do algoritmo inteligente**
+
+True
+
+Off-Policy learning em Reinforcement Learning refere-se ao cenário onde a policy do agente para selecionar àções é diferente da policy usada para gerar os dados. Isto pode envolver a avaliação e otimização de uma polcy diferente da que é usada para selecionar ações, permitindo aprendizagem mais flexível
+
+
+### **3.3 - Uma matriz confusão é uma métrica de avaliação de desempenho de modelos de Reinforcement Learning**
+
+False
+
+Uma Confusion Matrix é uma métrica mais comummente usada em supervised learning, particularmente para tarefas de classificação para avaliar o performance de um modelo ao comparar as labels previstas com as labels reais. Em reinforcement Learning, a avaliação do performance de um agente utiliza, normalmente, outras métricas como cumulative rewards e success rates.
+
+
+
+### **3.4 - Em todos os algoritmos de clustering é necessário justificar a quantidade de clusters a procurar nos dados**
+
+True
+
+Em clustering, a escolha do numero de clusters (k) é um aspeto crucial que impacta a qualidade dos resultados. Diferentes valores de K podem levar a clusters muito diferentes. Várias técnicas como o método do cotovelo (elbow method) e o método da silhueta (silhouette method) podem ser usadas para determinar o valor de K que melhor se adequa aos dados.
