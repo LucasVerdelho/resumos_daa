@@ -360,3 +360,73 @@ Uma Confusion Matrix é uma métrica mais comummente usada em supervised learnin
 True
 
 Em clustering, a escolha do numero de clusters (k) é um aspeto crucial que impacta a qualidade dos resultados. Diferentes valores de K podem levar a clusters muito diferentes. Várias técnicas como o método do cotovelo (elbow method) e o método da silhueta (silhouette method) podem ser usadas para determinar o valor de K que melhor se adequa aos dados.
+
+
+
+## **4. - Considere o dataset “breast_cancer”, usado diversas vezes no decorrer das aulas, com o intuito de treinar um modelo de classificação com capacidade de prever a existência de um tumor mamário, de acordo com alguns dados clínicos do paciente. Considere, ainda, o excerto de código abaixo, onde se apresenta a construção e avaliação de um modelo de aprendizagem automática.**
+
+```python
+df = pandas.read_csv('breast_cancer_dataset.csv')
+df['diagnosis'] = df['diagnosis'].substitute(['B', 'M'], [0, 1])
+
+X = df.drop(['diagnosis', 'id'], axis=1)
+y = df['diagnosis']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1, random_state=2023)
+
+model = RandomForestClassifier(random_state=2023)
+
+model.predict(X_train, y_train)
+
+inferences = model.fit(X_test)
+accuracy = accuracy_score(y_train, inferences)
+mse = MSE(y_test, inferences)
+
+print(classification_report(y_test, inferences))
+print(confusion_matrix(y_test, inferences))
+```
+
+### **4.1 - O excerto de código apresentado contém imprecisões. Identifique-as e corrija-as.**
+
+```python
+# Load the dataset
+df = pd.read_csv('breast_cancer_dataset.csv')
+
+# Map 'B' and 'M' to 0 and 1 in the 'diagnosis' column
+df['diagnosis'] = df['diagnosis'].replace(['B', 'M'], [0, 1])
+
+# Split the dataset into features (X) and target variable (y)
+X = df.drop(['diagnosis', 'id'], axis=1)
+y = df['diagnosis']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2023)
+
+# Create a RandomForestClassifier model
+model = RandomForestClassifier(random_state=2023)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions on the training set (this line was incorrect in the original code)
+inferences_train = model.predict(X_train)
+
+# Make predictions on the test set
+inferences_test = model.predict(X_test)
+
+# Calculate accuracy and mean squared error
+accuracy_train = accuracy_score(y_train, inferences_train)
+accuracy_test = accuracy_score(y_test, inferences_test)
+mse_test = mean_squared_error(y_test, inferences_test)
+```
+
+1. o método `replace` foi usado para mapear os valores 'B' e 'M' para 0 e 1 na coluna 'diagnosis'
+2. o test_size foi mudado para 0.2 para um split de 80/20 em que 80% dos dados são usados para treino e 20% para teste
+3. usado o método `fit` para treinar o modelo em vez do método `predict`
+4. separar as previsões em previsões de treino e previsões de teste
+5. corrigir o calculo do MSE
+
+
+
+## 5. bruh
+
+![bruh](images/truefalse.png)
