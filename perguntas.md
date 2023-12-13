@@ -152,8 +152,7 @@ model.add(Dense(16, input_dim=y.shape[1],
 activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
-model.compile(loss = 'binary_crossentropy', optimizer = 'adam',
-metrics = ['mse'])
+model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['mse'])
 model.transform(X_train, y_train, epochs=50,
 batch_size=32)
 loss, acc = model.evaluate(X_train, y_train)
@@ -204,7 +203,7 @@ print(f"Training Loss: {loss}, Training Accuracy: {acc}")
 
 4. o metodo `model.transform` não é válido, o método correto é `model.fit`
 
-5. As labels `Survived` são binárias (0 ou 1), mas o modelo está a usar uma função de ativação `sigmoid` na última camada, o que é adequado para classificação binária. No entanto, está a tratar-se como um problema de regressão ao usar `mse` (mean squared error) como função de perda. Deveria usar `binary_crossentropy` como função de perda
+5. As labels `Survived` são binárias (0 ou 1), mas o modelo está a usar uma função de ativação `sigmoid` na última camada, o que é adequado para classificação binária. No entanto, está a tratar-se como um problema de regressão ao usar `mse` (mean squared error) como métrica. Deveria usar `accuracy` como métrica
 
 
 ### **4.2 Identifique a técnica de aprendizagem utilizada neste excerto de código e indique quatro hiperparâmetros passiveis de serem modificados para afinar o modelo** 
@@ -297,7 +296,7 @@ A qualidade dos dados afeta significativamente os resultados de um processo de m
 
 
 
-# Teste 2022/2023
+# **Teste 2022/2023**
 
 
 ## **1. Complete os espaços em branco com a expressão devidamente preenchida de modo a que a afirmação seja correta.**
@@ -314,3 +313,4 @@ A qualidade dos dados afeta significativamente os resultados de um processo de m
 ### **2.1 - Quais poderão ser os motivos para esta convergir lentamente ou não convergir**
 
 ### **2.2 - Indique 2 exemplos de algoritmos de Machine Learning que façam uso desta técnica**
+
