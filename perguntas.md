@@ -298,3 +298,19 @@ A qualidade dos dados afeta significativamente os resultados de um processo de m
 
 
 # Teste 2022/2023
+
+
+## **1. Complete os espaços em branco com a expressão devidamente preenchida de modo a que a afirmação seja correta.**
+
+- Numa metodologia de análise de dados como o **`CRISP-DM`**, a preparação de dados é uma tarefa anterior à **`modelação`** e é preponderante visto que os dados recolhidos do mundo real podem apresentar-se **`incompletos, com ruído e inconsistências`**
+
+- Algorítmos de clustering tais como **`K-Means`** e **`Hierarchical Clustering`** implementam uma técnica de aprendizagem **`não supervisionada`** com o objetivo de agrupar um conjunto de casos de estudo, de tal forma que os objetos no mesmo grupo apresentam mais **`semelhanças`** entre si do que com os objetos de outros grupos.
+
+- Feature Engineering permite a criação de **`variáveis/features`** a partir da informação disponível, como forma de auxiliar o **`modelo`** a realizar previsões mais **`precisas`**
+
+
+## **2. - Em alguns algoritmos de Machine Learning é usada a técnica de descida por gradiente (gradient descent) no processo de otimização dos parâmetros do algoritmo**
+
+### **2.1 - Quais poderão ser os motivos para esta convergir lentamente ou não convergir**
+
+### **2.2 - Indique 2 exemplos de algoritmos de Machine Learning que façam uso desta técnica**
